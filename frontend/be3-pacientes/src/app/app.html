@@ -1,6 +1,87 @@
-  <h1>Pacientes</h1>
+<main>
 
-<button (click)="criarPaciente()">Adicionar Paciente</button>
+  <section class="sec-pacientes">
+    <div class="container">
+      
+      <button (click)="criarPaciente()">Adicionar Paciente</button>
+
+      <div class="component__table">
+        <table>
+          <thead>
+            <tr>
+              <th>
+                ID
+              </th>
+              <th>
+                Nome
+              </th>
+              <th>
+                Sobrenome
+              </th>
+              <th>
+                Dt. Nasc.
+              </th>
+              <th>
+                Gênero
+              </th>
+              <th>
+                CPF
+              </th>
+              <th>
+                RG
+              </th>
+              <th>
+                UF do RG
+              </th>
+              <th>
+                E-mail
+              </th>
+              <th>
+                Celular
+              </th>
+              <th>
+                Telefone
+              </th>
+              <th>
+                Convênio
+              </th>
+              <th>
+                Nº Carteirinha
+              </th>
+              <th>
+                Dt. Validade
+              </th>
+              <th>
+                Ações
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let p of pacientes">
+              <td data-label="ID">{{p.id}}</td>
+              <td data-label="Nome">{{p.nome}}</td>
+              <td data-label="Sobrenome">{{p.sobrenome}}</td>
+              <td data-label="Dt. Nasc.">{{p.dataNascimento}}</td>
+              <td data-label="Gênero">{{p.genero}}</td>
+              <td data-label="CPF">{{p.cpf}}</td>
+              <td data-label="RG">{{p.rg}}</td>
+              <td data-label="UF do RG">{{p.ufRg}}</td>
+              <td data-label="E-mail">{{p.email}}</td>
+              <td data-label="Celular">{{p.celular}}</td>
+              <td data-label="Telefone">{{p.telefone}}</td>
+              <td data-label="Convênio">{{p.convenio}}</td>
+              <td data-label="Nº Carteirinha">{{p.convenioId}}</td>
+              <td data-label="Dt. Validade">{{p.validadeCarteirinha}}</td>
+              <td data-label="Ações"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+</main>
 
 
 

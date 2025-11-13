@@ -1,16 +1,25 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Api } from './services/api';
+import { CommonModule } from '@angular/common';
+
+//
+import { Api, Paciente } from './services/api';
 
 @Component({
   selector: 'app-root',
+  //
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, CommonModule],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
+
+//
 export class App {
-  protected readonly title = signal('frontend');
+  //
+  pacientes: Paciente[] = [];
+  carregando = true;
+  erro = '';
 
   //
   constructor(private api: Api) {}
@@ -18,8 +27,15 @@ export class App {
   //
   ngOnInit() {
     this.api.getPacientes().subscribe({
-      next: (data: any) => console.log('Pacientes:', data),
-      error: (err: any) => console.error('Erro ao buscar pacientes:', err)
+      next: (dados) => {
+        this.pacientes = dados;
+        this.carregando = false;
+      },
+      error: (err) => {
+        console.error('Erro ao carregar pacientes:', err);
+        this.erro = 'Não foi possível carregar os pacientes.';
+        this.carregando = false;
+      },
     });
   }
 
