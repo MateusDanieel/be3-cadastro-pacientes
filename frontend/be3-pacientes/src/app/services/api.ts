@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core'; 
 
 //
-import { HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http'; 
 import { Observable } from 'rxjs';
 
 //
@@ -17,8 +17,9 @@ export interface Paciente {
   email: string,
   celular: string,
   telefone: string,
-  convenio: string,
-  convenioId: string,
+  convenio?: { id: number; nome: string } | null,
+  convenioId?: number | null,
+  numeroCarteirinha: string,
   validadeCarteirinha: string
 }
 
@@ -32,7 +33,10 @@ export class Api {
   //
   constructor(private http: HttpClient) {}
 
-  /**/ 
+  getConvenios() {
+    return this.http.get<any[]>(`${this.baseUrl}/convenios`);
+  }
+
   getPacientes(): Observable<Paciente[]> {
     return this.http.get<Paciente[]>(`${this.baseUrl}/pacientes`);
   }
@@ -42,17 +46,15 @@ export class Api {
   }
 
   getPacienteById(id: number) {
-    return this.http.get(`${this.baseUrl}/${id}`);
+    return this.http.get(`${this.baseUrl}/pacientes/${id}`);
   }
 
-  
-
   updatePaciente(id: number, paciente: any) {
-    return this.http.put(`${this.baseUrl}/${id}`, paciente);
+    return this.http.put(`${this.baseUrl}/pacientes/${id}`, paciente);
   }
 
   deletePaciente(id: number) {
-    return this.http.delete(`${this.baseUrl}/${id}`);
+    return this.http.patch(`${this.baseUrl}/pacientes/${id}/inativar`, {});
   }
-  /**/ 
+
 }

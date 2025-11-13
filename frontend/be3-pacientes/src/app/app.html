@@ -2,8 +2,90 @@
 
   <section class="sec-pacientes">
     <div class="container">
-      
-      <button (click)="criarPaciente()">Adicionar Paciente</button>
+
+      <form (ngSubmit)="onSubmit()" #pacienteForm="ngForm" class="sec-pacientes__form">
+
+        <label for="novoPacienteNome">Nome <small>*</small></label>
+        <input type="text" id="novoPacienteNome" name="nome" [(ngModel)]="novoPaciente.nome" required />
+
+        <label for="novoPacienteSobrenome">Sobrenome <small>*</small></label>
+        <input type="text" id="novoPacienteSobrenome" name="sobrenome" [(ngModel)]="novoPaciente.sobrenome" required />
+
+        <label for="novoPacienteDtNasc">Data de Nascimento <small>*</small></label>
+        <input type="date" id="novoPacienteDtNasc" name="dataNascimento" [(ngModel)]="novoPaciente.dataNascimento" required />
+
+        <label for="novoPacienteGenero">Gênero <small>*</small></label>
+        <select name="genero" [(ngModel)]="novoPaciente.genero" id="novoPacienteGenero" required>
+          <option value="" selected disabled>Selecione</option>
+          <option value="Masculino">Masculino</option>
+          <option value="Feminino">Feminino</option>
+          <option value="Outro">Outro</option>
+        </select>
+
+        <label for="novoPacienteCpf">CPF <small>*</small></label>
+        <input type="text" id="novoPacienteCpf" name="cpf" [(ngModel)]="novoPaciente.cpf" required />
+
+        <label for="novoPacienteRg">RG <small>*</small></label>
+        <input type="text" id="novoPacienteRg" name="rg" [(ngModel)]="novoPaciente.rg" required />
+
+        <label for="novoPacienteUfRg">UF do RG <small>*</small></label>
+        <select name="ufRg" [(ngModel)]="novoPaciente.ufRg" id="novoPacienteUfRg" required>
+          <option value="" selected disabled>Selecione</option>
+          <option value="AC">AC</option>
+          <option value="AL">AL</option>
+          <option value="AP">AP</option>
+          <option value="AM">AM</option>
+          <option value="BA">BA</option>
+          <option value="CE">CE</option>
+          <option value="DF">DF</option>
+          <option value="ES">ES</option>
+          <option value="GO">GO</option>
+          <option value="MA">MA</option>
+          <option value="MT">MT</option>
+          <option value="MS">MS</option>
+          <option value="MG">MG</option>
+          <option value="PA">PA</option>
+          <option value="PB">PB</option>
+          <option value="PR">PR</option>
+          <option value="PE">PE</option>
+          <option value="PI">PI</option>
+          <option value="RJ">RJ</option>
+          <option value="RN">RN</option>
+          <option value="RS">RS</option>
+          <option value="RO">RO</option>
+          <option value="RR">RR</option>
+          <option value="SC">SC</option>
+          <option value="SP">SP</option>
+          <option value="SE">SE</option>
+          <option value="TO">TO</option>
+        </select>
+
+        <label for="novoPacienteEmail">E-mail <small>*</small></label>
+        <input type="email" id="novoPacienteEmail" name="email" [(ngModel)]="novoPaciente.email" required />
+
+        <label for="novoPacienteCelular">Celular <small>*</small></label>
+        <input type="tel" id="novoPacienteCelular" name="celular" [(ngModel)]="novoPaciente.celular" required />
+
+        <label for="novoPacienteTelefone">Telefone</label>
+        <input type="tel" id="novoPacienteTelefone" name="telefone" [(ngModel)]="novoPaciente.telefone" />
+
+        <label for="novoPacienteConvenio">Convênio <small>*</small></label>
+        <select id="novoPacienteConvenio" name="convenioId" [(ngModel)]="novoPaciente.convenioId" required>
+          <option value="" disabled selected>Selecione</option>
+
+          <option *ngFor="let item of convenios" [value]="item.id">
+            {{ item.nome }}
+          </option>
+        </select>
+
+        <label for="novoPacienteNmrCarteirinhaConvenio">Nº da Carteirinha do Convênio <small>*</small></label>
+        <input type="text" id="novoPacienteNmrCarteirinhaConvenio" name="numeroCarteirinha" [(ngModel)]="novoPaciente.numeroCarteirinha" required />
+
+        <label for="novoPacienteValidadeCarteirinha">Validade da Carteirinha do Convênio <small>*</small></label>
+        <input type="date" id="novoPacienteValidadeCarteirinha" name="validadeCarteirinha" [(ngModel)]="novoPaciente.validadeCarteirinha" required />
+
+        <button type="submit" [disabled]="pacienteForm.invalid">Salvar</button>
+      </form>
 
       <div class="component__table">
         <table>
@@ -62,7 +144,7 @@
               <td data-label="ID">{{p.id}}</td>
               <td data-label="Nome">{{p.nome}}</td>
               <td data-label="Sobrenome">{{p.sobrenome}}</td>
-              <td data-label="Dt. Nasc.">{{p.dataNascimento}}</td>
+              <td data-label="Dt. Nasc.">{{ p.dataNascimento | date:'dd/MM/yyyy' }}</td>
               <td data-label="Gênero">{{p.genero}}</td>
               <td data-label="CPF">{{p.cpf}}</td>
               <td data-label="RG">{{p.rg}}</td>
@@ -70,10 +152,13 @@
               <td data-label="E-mail">{{p.email}}</td>
               <td data-label="Celular">{{p.celular}}</td>
               <td data-label="Telefone">{{p.telefone}}</td>
-              <td data-label="Convênio">{{p.convenio}}</td>
-              <td data-label="Nº Carteirinha">{{p.convenioId}}</td>
+              <td data-label="Convênio">{{ p.convenio?.nome || getConvenioNome(p.convenioId) }}</td>
+              <td data-label="Nº Carteirinha">{{p.numeroCarteirinha}}</td>
               <td data-label="Dt. Validade">{{p.validadeCarteirinha}}</td>
-              <td data-label="Ações"></td>
+              <td data-label="Ações">
+                <button (click)="editarPaciente(p)">Editar</button>
+                <button (click)="inativarPaciente(p.id)">Inativar</button>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -82,7 +167,5 @@
   </section>
 
 </main>
-
-
 
 <router-outlet />
