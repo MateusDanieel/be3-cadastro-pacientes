@@ -42,17 +42,16 @@ export class Api {
   }
 
   getPacienteById(id: number) {
-    return this.http.get(`${this.baseUrl}/${id}`);
+    return this.http.get(`${this.baseUrl}/pacientes/${id}`);
   }
 
-  
-
   updatePaciente(id: number, paciente: any) {
-    return this.http.put(`${this.baseUrl}/${id}`, paciente);
+    return this.http.put(`${this.baseUrl}/pacientes/${id}`, paciente);
   }
 
   deletePaciente(id: number) {
-    return this.http.delete(`${this.baseUrl}/${id}`);
+    return this.http.patch(`${this.baseUrl}/pacientes/${id}/inativar`, {});
   }
+
   /**/ 
 }
