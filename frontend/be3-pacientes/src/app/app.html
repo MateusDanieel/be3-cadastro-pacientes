@@ -87,8 +87,6 @@
         <button type="submit" [disabled]="pacienteForm.invalid">Salvar</button>
       </form>
 
-      <button (click)="criarPaciente()">Adicionar Paciente</button>
-
       <div class="component__table">
         <table>
           <thead>
@@ -154,8 +152,8 @@
               <td data-label="E-mail">{{p.email}}</td>
               <td data-label="Celular">{{p.celular}}</td>
               <td data-label="Telefone">{{p.telefone}}</td>
-              <td data-label="Convênio">{{ p.convenio?.nome || p.convenioId }}</td>
-              <td data-label="Nº Carteirinha">{{p.convenioId}}</td>
+              <td data-label="Convênio">{{ p.convenio?.nome || getConvenioNome(p.convenioId) }}</td>
+              <td data-label="Nº Carteirinha">{{p.numeroCarteirinha}}</td>
               <td data-label="Dt. Validade">{{p.validadeCarteirinha}}</td>
               <td data-label="Ações">
                 <button (click)="editarPaciente(p)">Editar</button>

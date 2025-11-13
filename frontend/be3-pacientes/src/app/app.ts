@@ -43,36 +43,6 @@ export class App {
   constructor(private api: Api) {}
 
   //
-  criarPaciente() {
-    const novoPaciente = {
-      //id: 102, // Trocar ID
-      nome: "Marcos",
-      sobrenome: "Roberto da Silva",
-      dataNascimento: "1989-02-10",
-      genero: "Masculino",
-      cpf: "35312678740", // Banco validando cpf duplicado
-      rg: "1022212368",
-      ufRg: "SP",
-      email: "l@l",
-      celular: "11989051832",
-      telefone: "1122544956",
-      /*
-      convenio: null,
-      convenioId: null,
-      validadeCarteirinha: undefined
-      */
-    };
-
-    this.api.addPaciente(novoPaciente).subscribe({
-      next: (res: any) => {
-        console.log('Paciente criado com sucesso:', res);
-        this.carregarPacientes();
-      },
-      error: (err: any) => console.error('Erro ao criar paciente:', err)
-    });
-  }
-
-  //
   carregarPacientes() {
     this.carregando = true;
     this.api.getPacientes().subscribe({
@@ -88,6 +58,7 @@ export class App {
     });
   }
 
+  //
   carregarConvenios() {
     this.api.getConvenios().subscribe({
       next: (dados) => this.convenios = dados,
@@ -127,6 +98,13 @@ export class App {
         alert('Erro ao atualizar paciente');
       }
     });
+  }
+
+  //
+  getConvenioNome(id: number | null | undefined): string {
+    if (!id) return '';
+    const conv = this.convenios.find(c => c.id === id);
+    return conv ? conv.nome : '';
   }
 
   //
