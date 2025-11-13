@@ -1,1 +1,66 @@
-/* You can add global styles to this file, and also import other style files */
+$black: #000;
+$white: #fff;
+
+$sm: 576px; 
+$md: 768px; 
+$lg: 992px; 
+$xl: 1200px; 
+$xxl: 1400px;
+
+:root {
+	font-size: 62.5%;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: 1.6rem;
+}
+
+.container {
+    width: 100%;
+    max-width: $xl;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.component {
+    &__table {
+        overflow-x: auto;
+        width: 100%;
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+
+            tr th, tr td {
+                padding: 10px;
+                text-align: left;
+                border-bottom: 1px solid #ccc;
+                white-space: nowrap;
+            }
+
+            @media (max-width: $sm) {
+                tbody, th, td, tr {
+                    display: block;
+                }
+
+                thead {
+                    display: none;
+                }
+
+                td {
+                    display: flex;
+
+                    &::before {
+                        content: attr(data-label);
+                        font-weight: 600;
+                        margin: 0 4px 0 0;
+                    }
+                }
+            }
+
+        }
+    }
+}
