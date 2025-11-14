@@ -4,10 +4,15 @@ import { CommonModule } from '@angular/common';
 import { Api, Paciente } from './services/api';
 import { FormsModule } from '@angular/forms';
 import { NgxMaskDirective } from 'ngx-mask';
+import { CpfValidatorDirective } from './validators/cpf.directive';
+import { DataFuturaValidatorDirective } from './validators/birthdate.directive';
+import { EmailValidatorDirective } from './validators/email.directive';
+import { TelefoneObrigatorioDirective } from './validators/phone.directive';
+
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, CommonModule, FormsModule, NgxMaskDirective],
+  imports: [RouterOutlet, CommonModule, FormsModule, NgxMaskDirective, CpfValidatorDirective, DataFuturaValidatorDirective, EmailValidatorDirective, TelefoneObrigatorioDirective],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
@@ -79,6 +84,18 @@ export class App {
     this.editando = true;
     this.pacienteEditandoId = p.id;
     this.novoPaciente = { ...p, convenioId: p.convenio?.id || null };
+    
+    if (this.novoPaciente.dataNascimento) {
+      this.novoPaciente.dataNascimento =
+        this.novoPaciente.dataNascimento.split("T")[0];
+    }
+
+    if (this.novoPaciente.validadeCarteirinha) {
+      this.novoPaciente.validadeCarteirinha =
+        this.novoPaciente.validadeCarteirinha.split("T")[0];
+    }
+
+    this.abrirModal('#modalForm');
   }
 
   getConvenioNome(id: number | null | undefined): string {
@@ -115,6 +132,10 @@ export class App {
     }
   }
 
+  alertas(msg: string, type: string) {
+
+  }
+
   resetForm() {
     this.novoPaciente = { 
       nome: '',
@@ -142,9 +163,10 @@ export class App {
           console.log('Paciente atualizado com sucesso:', res);
           const index = this.pacientes.findIndex(p => p.id === this.pacienteEditandoId);
           if (index > -1) this.pacientes[index] = res;
+          this.fecharModal('#modalForm');
           this.resetForm();
           this.carregarPacientes();
-          this.fecharModal('#modalForm');
+          
         },
         error: (err) => console.error('Erro ao atualizar paciente:', err)
       });
@@ -153,8 +175,8 @@ export class App {
         next: (res) => {
           console.log('Paciente criado com sucesso:', res);
           this.pacientes.push(res);
-          this.resetForm();
           this.fecharModal('#modalForm');
+          this.resetForm();
         },
         error: (err) => console.error('Erro ao criar paciente:', err)
       });
