@@ -59,10 +59,7 @@
 
 <div class="modal-form" id="modalForm" role="dialog" aria-modal="true" hidden (click)="onBackdropClick($event, '#modalForm')">
   <div class="modal-form__content">
-    <button type="button" class="modal-form__content__bt-close" (click)="fecharModal('#modalForm')">
-      &times;
-    </button>
-
+    
     <form (ngSubmit)="onSubmit()" #pacienteForm="ngForm" class="modal-form__content__form">
 
         <label for="novoPacienteNome">Nome</label>
@@ -78,7 +75,6 @@
           A data de nascimento não pode ser no futuro.
         </small>
 
-
         <label for="novoPacienteGenero">Gênero</label>
         <select name="genero" [(ngModel)]="novoPaciente.genero" id="novoPacienteGenero" required>
           <option value="" selected disabled>Selecione</option>
@@ -88,13 +84,24 @@
         </select>
 
         <label for="novoPacienteCpf">CPF</label>
-        <input type="text" id="novoPacienteCpf" name="cpf" mask="000.000.000-00" [(ngModel)]="novoPaciente.cpf" cpfValidator #cpf="ngModel" />
+        <input
+          type="text"
+          id="novoPacienteCpf"
+          name="cpf"
+          mask="000.000.000-00"
+          [(ngModel)]="novoPaciente.cpf"
+          cpfValidator
+          cpfDuplicate
+          [cpfOriginal]="cpfOriginal"
+          [pacienteId]="pacienteEditandoId"
+          #cpf="ngModel"
+        />
 
         <small *ngIf="cpf.errors?.['cpfInvalido'] && cpf.touched" class="error">
           CPF inválido.
         </small>
 
-        <small *ngIf="cpf.errors?.['cpfExistente'] && cpf.touched" class="error">
+        <small *ngIf="cpf.errors?.['cpfJaExiste']  && cpf.touched" class="error">
           Este CPF já está cadastrado.
         </small>
 
@@ -134,7 +141,15 @@
         </select>
 
         <label for="novoPacienteEmail">E-mail</label>
-        <input type="email" id="novoPacienteEmail" name="email" [(ngModel)]="novoPaciente.email" emailValidator #email="ngModel" required />
+        <input 
+          type="email" 
+          id="novoPacienteEmail" 
+          name="email" 
+          [(ngModel)]="novoPaciente.email" 
+          emailValidator 
+          #email="ngModel" 
+          required 
+        />
 
         <small *ngIf="email.errors?.['emailInvalido'] && email.touched" class="error">
           E-mail inválido.
@@ -182,6 +197,10 @@
         <input type="date" id="novoPacienteValidadeCarteirinha" name="validadeCarteirinha" [(ngModel)]="novoPaciente.validadeCarteirinha" required />
 
         <button type="submit" [disabled]="pacienteForm.invalid">Salvar</button>
+
+        <button type="button" class="modal-form__content__bt-close" (click)="fecharModal('#modalForm')">
+          &times;
+        </button>
       </form>
   </div>
 </div>

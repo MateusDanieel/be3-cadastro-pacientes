@@ -4,15 +4,14 @@ import { CommonModule } from '@angular/common';
 import { Api, Paciente } from './services/api';
 import { FormsModule } from '@angular/forms';
 import { NgxMaskDirective } from 'ngx-mask';
-import { CpfValidatorDirective } from './validators/cpf.directive';
+import { CpfValidatorDirective, CpfDuplicateDirective } from './validators/cpf.directive';
 import { DataFuturaValidatorDirective } from './validators/birthdate.directive';
 import { EmailValidatorDirective } from './validators/email.directive';
 import { TelefoneObrigatorioDirective } from './validators/phone.directive';
 
-
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, CommonModule, FormsModule, NgxMaskDirective, CpfValidatorDirective, DataFuturaValidatorDirective, EmailValidatorDirective, TelefoneObrigatorioDirective],
+  imports: [RouterOutlet, CommonModule, FormsModule, NgxMaskDirective, CpfValidatorDirective, CpfDuplicateDirective, DataFuturaValidatorDirective, EmailValidatorDirective, TelefoneObrigatorioDirective],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
@@ -24,6 +23,7 @@ export class App {
   erro = '';
   editando: boolean = false;
   pacienteEditandoId: number | null = null;
+  cpfOriginal: string | null = null;
 
   novoPaciente: any = {
     nome: '',
@@ -84,6 +84,8 @@ export class App {
     this.editando = true;
     this.pacienteEditandoId = p.id;
     this.novoPaciente = { ...p, convenioId: p.convenio?.id || null };
+
+    this.cpfOriginal = p.cpf;
     
     if (this.novoPaciente.dataNascimento) {
       this.novoPaciente.dataNascimento =
@@ -115,12 +117,14 @@ export class App {
 
   fecharModal(el: any) {
     document.querySelector(el).setAttribute('hidden', '');
-    
+
     const scrollPos = Math.abs(parseInt(document.body.style.top, 10));
     document.body.style.position = '';
     document.body.style.top = '';
     document.body.style.width = '';
     window.scrollTo(0, scrollPos);
+
+    this.resetForm();
   }
 
   onBackdropClick(event: MouseEvent, el: any) {
@@ -137,6 +141,7 @@ export class App {
   }
 
   resetForm() {
+    this.cpfOriginal = null;
     this.novoPaciente = { 
       nome: '',
       sobrenome: '',
@@ -164,7 +169,6 @@ export class App {
           const index = this.pacientes.findIndex(p => p.id === this.pacienteEditandoId);
           if (index > -1) this.pacientes[index] = res;
           this.fecharModal('#modalForm');
-          this.resetForm();
           this.carregarPacientes();
           
         },
@@ -176,7 +180,6 @@ export class App {
           console.log('Paciente criado com sucesso:', res);
           this.pacientes.push(res);
           this.fecharModal('#modalForm');
-          this.resetForm();
         },
         error: (err) => console.error('Erro ao criar paciente:', err)
       });

@@ -53,4 +53,8 @@ export class Api {
     return this.http.patch(`${this.baseUrl}/pacientes/${id}/inativar`, {});
   }
 
+  verificarCpfExistente(cpf: string) {
+    return this.http.get<boolean>(`${this.baseUrl}/pacientes/verificar-cpf/${cpf}`);
+  }
+
 }
