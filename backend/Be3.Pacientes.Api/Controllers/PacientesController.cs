@@ -33,6 +33,20 @@ namespace Be3.Pacientes.Api.Controllers
             return Ok(p);
         }
 
+        [HttpGet("verificar-cpf/{cpf}")]
+        public async Task<ActionResult<bool>> VerificarCpf(string cpf)
+        {
+            if (string.IsNullOrWhiteSpace(cpf))
+                return Ok(false);
+
+            var onlyNumbers = new string(cpf.Where(char.IsDigit).ToArray());
+
+            var exists = await _context.Pacientes
+                .AnyAsync(x => x.CPF == onlyNumbers);
+
+            return Ok(exists);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create(Paciente paciente)
         {

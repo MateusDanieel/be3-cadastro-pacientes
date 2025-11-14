@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core'; 
-
-//
 import { HttpClient } from '@angular/common/http'; 
 import { Observable } from 'rxjs';
 
-//
 export interface Paciente {
   id: number,
   nome: string,
@@ -27,10 +24,9 @@ export interface Paciente {
   providedIn: 'root',
 })
 export class Api {
-  //
+  
   private baseUrl = 'http://localhost:5155/api';
 
-  //
   constructor(private http: HttpClient) {}
 
   getConvenios() {
@@ -49,8 +45,8 @@ export class Api {
     return this.http.get(`${this.baseUrl}/pacientes/${id}`);
   }
 
-  updatePaciente(id: number, paciente: any) {
-    return this.http.put(`${this.baseUrl}/pacientes/${id}`, paciente);
+  updatePaciente(id: number, paciente: any): Observable<Paciente> {
+    return this.http.put<Paciente>(`${this.baseUrl}/pacientes/${id}`, paciente);
   }
 
   deletePaciente(id: number) {
