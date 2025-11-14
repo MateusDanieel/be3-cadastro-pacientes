@@ -1,0 +1,67 @@
+@import '../../src/styles.scss';
+
+main {
+    padding: 48px 0;
+}
+
+html.modal-open,
+body.modal-open {
+    overflow: hidden;
+    height: 100%;
+}
+
+.modal-form {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba($black, .2);
+    overflow-y: auto;
+    padding: 60px 0 40px;
+
+    &__content {
+        background-color: $white;
+        box-shadow: 1px 1px 10px rgba($white, .2);
+        width: 100%;
+        max-width: $sm;
+        padding: 40px;
+        margin: auto;
+        position: relative;
+
+        &__bt-close {
+            border: 0;
+            background-color: transparent;
+            color: rgba($black, .3);
+            outline: none;
+            font-size: 4.0rem;
+            position: absolute;
+            right: 0;
+            top: -60px;
+            cursor: pointer;
+        }
+
+        &__form {
+            label {
+                font-size: 1.4rem;
+                margin: 0 0 4px;
+                display: block;
+
+                small {
+                    color: #f00;
+                }
+            }
+
+            input, select {
+                display: block;
+                width: 100%;
+                margin: 0 0 8px;
+                border-radius: 0;
+                border: 1px solid rgba($black, .2);
+                padding: 10px;
+                outline: none;
+                font-size: 1.4rem;
+            }
+        }
+    }
+}

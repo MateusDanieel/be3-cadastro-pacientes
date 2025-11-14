@@ -86,9 +86,52 @@ export class App {
     return conv ? conv.nome : '';
   }
 
-  ngOnInit() {
-    this.carregarConvenios();
-    this.carregarPacientes();
+  abrirModal(el: any) {
+    document.querySelector(el).removeAttribute('hidden');
+    
+    const scrollPos = window.scrollY;
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${scrollPos}px`;
+    document.body.style.width = '100%';
+  }
+
+  fecharModal(el: any) {
+    document.querySelector(el).setAttribute('hidden', '');
+    
+    const scrollPos = Math.abs(parseInt(document.body.style.top, 10));
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+    window.scrollTo(0, scrollPos);
+  }
+
+  onBackdropClick(event: MouseEvent, el: any) {
+    const backdrop = event.currentTarget;
+    const clicked = event.target;
+
+    if (backdrop === clicked) {
+      this.fecharModal(el);
+    }
+  }
+
+  resetForm() {
+    this.novoPaciente = { 
+      nome: '',
+      sobrenome: '',
+      dataNascimento: '',
+      genero: '',
+      cpf: '',
+      rg: '',
+      ufRg: '',
+      email: '',
+      celular: '',
+      telefone: '',
+      convenioId: null,
+      numeroCarteirinha: '',
+      validadeCarteirinha: '' 
+    };
+    this.editando = false;
+    this.pacienteEditandoId = null;
   }
 
   onSubmit() {
@@ -115,23 +158,9 @@ export class App {
     }
   }
 
-  resetForm() {
-    this.novoPaciente = { 
-      nome: '',
-      sobrenome: '',
-      dataNascimento: '',
-      genero: '',
-      cpf: '',
-      rg: '',
-      ufRg: '',
-      email: '',
-      celular: '',
-      telefone: '',
-      convenioId: null,
-      numeroCarteirinha: '',
-      validadeCarteirinha: '' 
-    };
-    this.editando = false;
-    this.pacienteEditandoId = null;
+  ngOnInit() {
+    this.carregarConvenios();
+    this.carregarPacientes();
   }
+
 }

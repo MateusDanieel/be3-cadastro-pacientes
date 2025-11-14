@@ -2,8 +2,98 @@
 
   <section class="sec-pacientes">
     <div class="container">
+      <button type="button" (click)="abrirModal('#modalForm')">
+        Cadastrar Paciente
+      </button>
 
-      <form (ngSubmit)="onSubmit()" #pacienteForm="ngForm" class="sec-pacientes__form">
+      <div class="component__table">
+        <table>
+          <thead>
+            <tr>
+              <th>
+                ID
+              </th>
+              <th>
+                Nome
+              </th>
+              <th>
+                Sobrenome
+              </th>
+              <th>
+                Dt. Nasc.
+              </th>
+              <th>
+                Gênero
+              </th>
+              <th>
+                CPF
+              </th>
+              <th>
+                RG
+              </th>
+              <th>
+                UF do RG
+              </th>
+              <th>
+                E-mail
+              </th>
+              <th>
+                Celular
+              </th>
+              <th>
+                Telefone
+              </th>
+              <th>
+                Convênio
+              </th>
+              <th>
+                Nº Carteirinha
+              </th>
+              <th>
+                Dt. Validade
+              </th>
+              <th>
+                Ações
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let p of pacientes">
+              <td data-label="ID">{{p?.id}}</td>
+              <td data-label="Nome">{{p?.nome}}</td>
+              <td data-label="Sobrenome">{{p?.sobrenome}}</td>
+              <td data-label="Dt. Nasc.">{{ p?.dataNascimento | date:'dd/MM/yyyy' }}</td>
+              <td data-label="Gênero">{{p?.genero}}</td>
+              <td data-label="CPF">{{p?.cpf}}</td>
+              <td data-label="RG">{{p?.rg}}</td>
+              <td data-label="UF do RG">{{p?.ufRg}}</td>
+              <td data-label="E-mail">{{p?.email}}</td>
+              <td data-label="Celular">{{p?.celular}}</td>
+              <td data-label="Telefone">{{p?.telefone}}</td>
+              <td data-label="Convênio">{{ p?.convenio?.nome || getConvenioNome(p?.convenioId) }}</td>
+              <td data-label="Nº Carteirinha">{{p?.numeroCarteirinha}}</td>
+              <td data-label="Dt. Validade">{{p?.validadeCarteirinha | date:'dd/MM/yyyy' }}</td>
+              <td data-label="Ações">
+                <button (click)="editarPaciente(p)">Editar</button>
+                <button (click)="inativarPaciente(p.id)">Inativar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div class="modal-form" id="modalForm" role="dialog" aria-modal="true" hidden (click)="onBackdropClick($event, '#modalForm')">
+  <div class="modal-form__content">
+    <button type="button" class="modal-form__content__bt-close" (click)="fecharModal('#modalForm')">
+      &times;
+    </button>
+
+    <form (ngSubmit)="onSubmit()" #pacienteForm="ngForm" class="modal-form__content__form">
 
         <label for="novoPacienteNome">Nome <small>*</small></label>
         <input type="text" id="novoPacienteNome" name="nome" [(ngModel)]="novoPaciente.nome" required />
@@ -86,86 +176,9 @@
 
         <button type="submit" [disabled]="pacienteForm.invalid">Salvar</button>
       </form>
+  </div>
+</div>
 
-      <div class="component__table">
-        <table>
-          <thead>
-            <tr>
-              <th>
-                ID
-              </th>
-              <th>
-                Nome
-              </th>
-              <th>
-                Sobrenome
-              </th>
-              <th>
-                Dt. Nasc.
-              </th>
-              <th>
-                Gênero
-              </th>
-              <th>
-                CPF
-              </th>
-              <th>
-                RG
-              </th>
-              <th>
-                UF do RG
-              </th>
-              <th>
-                E-mail
-              </th>
-              <th>
-                Celular
-              </th>
-              <th>
-                Telefone
-              </th>
-              <th>
-                Convênio
-              </th>
-              <th>
-                Nº Carteirinha
-              </th>
-              <th>
-                Dt. Validade
-              </th>
-              <th>
-                Ações
-              </th>
-            </tr>
-          </thead>
 
-          <tbody>
-            <tr *ngFor="let p of pacientes">
-              <td data-label="ID">{{p?.id}}</td>
-              <td data-label="Nome">{{p?.nome}}</td>
-              <td data-label="Sobrenome">{{p?.sobrenome}}</td>
-              <td data-label="Dt. Nasc.">{{ p?.dataNascimento | date:'dd/MM/yyyy' }}</td>
-              <td data-label="Gênero">{{p?.genero}}</td>
-              <td data-label="CPF">{{p?.cpf}}</td>
-              <td data-label="RG">{{p?.rg}}</td>
-              <td data-label="UF do RG">{{p?.ufRg}}</td>
-              <td data-label="E-mail">{{p?.email}}</td>
-              <td data-label="Celular">{{p?.celular}}</td>
-              <td data-label="Telefone">{{p?.telefone}}</td>
-              <td data-label="Convênio">{{ p?.convenio?.nome || getConvenioNome(p?.convenioId) }}</td>
-              <td data-label="Nº Carteirinha">{{p?.numeroCarteirinha}}</td>
-              <td data-label="Dt. Validade">{{p?.validadeCarteirinha | date:'dd/MM/yyyy' }}</td>
-              <td data-label="Ações">
-                <button (click)="editarPaciente(p)">Editar</button>
-                <button (click)="inativarPaciente(p.id)">Inativar</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-
-</main>
 
 <router-outlet />
