@@ -4,10 +4,14 @@ import { CommonModule } from '@angular/common';
 import { Api, Paciente } from './services/api';
 import { FormsModule } from '@angular/forms';
 import { NgxMaskDirective } from 'ngx-mask';
+import { CpfValidatorDirective, CpfDuplicateDirective } from './validators/cpf.directive';
+import { DataFuturaValidatorDirective } from './validators/birthdate.directive';
+import { EmailValidatorDirective } from './validators/email.directive';
+import { TelefoneObrigatorioDirective } from './validators/phone.directive';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, CommonModule, FormsModule, NgxMaskDirective],
+  imports: [RouterOutlet, CommonModule, FormsModule, NgxMaskDirective, CpfValidatorDirective, CpfDuplicateDirective, DataFuturaValidatorDirective, EmailValidatorDirective, TelefoneObrigatorioDirective],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
@@ -19,6 +23,7 @@ export class App {
   erro = '';
   editando: boolean = false;
   pacienteEditandoId: number | null = null;
+  cpfOriginal: string | null = null;
 
   novoPaciente: any = {
     nome: '',
@@ -79,6 +84,20 @@ export class App {
     this.editando = true;
     this.pacienteEditandoId = p.id;
     this.novoPaciente = { ...p, convenioId: p.convenio?.id || null };
+
+    this.cpfOriginal = p.cpf;
+    
+    if (this.novoPaciente.dataNascimento) {
+      this.novoPaciente.dataNascimento =
+        this.novoPaciente.dataNascimento.split("T")[0];
+    }
+
+    if (this.novoPaciente.validadeCarteirinha) {
+      this.novoPaciente.validadeCarteirinha =
+        this.novoPaciente.validadeCarteirinha.split("T")[0];
+    }
+
+    this.abrirModal('#modalForm');
   }
 
   getConvenioNome(id: number | null | undefined): string {
@@ -98,12 +117,14 @@ export class App {
 
   fecharModal(el: any) {
     document.querySelector(el).setAttribute('hidden', '');
-    
+
     const scrollPos = Math.abs(parseInt(document.body.style.top, 10));
     document.body.style.position = '';
     document.body.style.top = '';
     document.body.style.width = '';
     window.scrollTo(0, scrollPos);
+
+    this.resetForm();
   }
 
   onBackdropClick(event: MouseEvent, el: any) {
@@ -115,7 +136,12 @@ export class App {
     }
   }
 
+  alertas(msg: string, type: string) {
+
+  }
+
   resetForm() {
+    this.cpfOriginal = null;
     this.novoPaciente = { 
       nome: '',
       sobrenome: '',
@@ -142,9 +168,9 @@ export class App {
           console.log('Paciente atualizado com sucesso:', res);
           const index = this.pacientes.findIndex(p => p.id === this.pacienteEditandoId);
           if (index > -1) this.pacientes[index] = res;
-          this.resetForm();
-          this.carregarPacientes();
           this.fecharModal('#modalForm');
+          this.carregarPacientes();
+          
         },
         error: (err) => console.error('Erro ao atualizar paciente:', err)
       });
@@ -153,7 +179,6 @@ export class App {
         next: (res) => {
           console.log('Paciente criado com sucesso:', res);
           this.pacientes.push(res);
-          this.resetForm();
           this.fecharModal('#modalForm');
         },
         error: (err) => console.error('Erro ao criar paciente:', err)
