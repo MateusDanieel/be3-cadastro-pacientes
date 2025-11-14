@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 $black: #000;
 $white: #fff;
 
@@ -15,12 +17,13 @@ $xxl: 1400px;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
     font-size: 1.6rem;
 }
 
 .container {
     width: 100%;
-    max-width: $xl;
+    max-width: $xxl;
     margin: 0 auto;
     padding: 0 20px;
 }
@@ -29,16 +32,47 @@ $xxl: 1400px;
     &__table {
         overflow-x: auto;
         width: 100%;
+        border: 1px solid rgba($black, .2);
+        box-shadow: 1px 1px 10px rgba($black, .1);
+
+        &::-webkit-scrollbar {
+            height: 10px;
+            cursor: pointer;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: transparent; 
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: rgba($black, .2);
+
+            &:hover {
+                background: rgba($black, .3);
+            }
+        }
 
         table {
             width: 100%;
             border-collapse: collapse;
 
             tr th, tr td {
-                padding: 10px;
+                padding: 10px 20px;
                 text-align: left;
-                border-bottom: 1px solid #ccc;
+                border-bottom: 1px solid rgba($black, .2);
                 white-space: nowrap;
+            }
+
+            tbody {
+                tr {
+                    &:nth-child(odd) {
+                        background-color: rgba($black, .05); 
+                    }
+
+                    &:nth-child(even) {
+                        background-color: $white;
+                    }
+                }
             }
 
             @media (max-width: $sm) {

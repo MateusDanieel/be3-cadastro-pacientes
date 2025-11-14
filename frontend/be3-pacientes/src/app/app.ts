@@ -1,22 +1,17 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
-
-//
 import { Api, Paciente } from './services/api';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
-  //standalone: true,
   imports: [RouterOutlet, CommonModule, FormsModule],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
 
-//
 export class App {
-  //
   pacientes: Paciente[] = [];
   convenios: any[] = [];
   carregando = true;
@@ -24,8 +19,6 @@ export class App {
   editando: boolean = false;
   pacienteEditandoId: number | null = null;
 
-
-  //
   novoPaciente: any = {
     nome: '',
     sobrenome: '',
@@ -42,10 +35,8 @@ export class App {
     validadeCarteirinha: ''
   };
 
-  //
   constructor(private api: Api) {}
 
-  //
   carregarPacientes() {
     this.carregando = true;
     this.api.getPacientes().subscribe({
@@ -61,7 +52,6 @@ export class App {
     });
   }
 
-  //
   carregarConvenios() {
     this.api.getConvenios().subscribe({
       next: (dados) => this.convenios = dados,
@@ -69,7 +59,6 @@ export class App {
     });
   }
 
-  //
   inativarPaciente(id: number) {
     if (!confirm('Deseja inativar este paciente?')) return;
 
@@ -89,39 +78,19 @@ export class App {
     this.editando = true;
     this.pacienteEditandoId = p.id;
     this.novoPaciente = { ...p, convenioId: p.convenio?.id || null };
-
-
-    /*
-    const novoNome = prompt('Editar nome', p.nome);
-    if (novoNome === null) return;
-    const payload = { ...p, nome: novoNome };
-    this.api.updatePaciente(p.id!, payload).subscribe({
-      next: () => {
-        console.log('Paciente atualizado');
-        this.carregarPacientes();
-      },
-      error: (err: any) => {
-        console.error('Erro ao atualizar paciente:', err);
-        alert('Erro ao atualizar paciente');
-      }
-    });
-    */
   }
 
-  //
   getConvenioNome(id: number | null | undefined): string {
     if (!id) return '';
     const conv = this.convenios.find(c => c.id === id);
     return conv ? conv.nome : '';
   }
 
-  //
   ngOnInit() {
     this.carregarConvenios();
     this.carregarPacientes();
   }
 
-  //
   onSubmit() {
     if (this.editando && this.pacienteEditandoId !== null) {
       this.api.updatePaciente(this.pacienteEditandoId, this.novoPaciente).subscribe({
