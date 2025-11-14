@@ -3,10 +3,11 @@ import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Api, Paciente } from './services/api';
 import { FormsModule } from '@angular/forms';
+import { NgxMaskDirective } from 'ngx-mask';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, CommonModule, FormsModule],
+  imports: [RouterOutlet, CommonModule, FormsModule, NgxMaskDirective],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
@@ -143,6 +144,7 @@ export class App {
           if (index > -1) this.pacientes[index] = res;
           this.resetForm();
           this.carregarPacientes();
+          this.fecharModal('#modalForm');
         },
         error: (err) => console.error('Erro ao atualizar paciente:', err)
       });
@@ -152,6 +154,7 @@ export class App {
           console.log('Paciente criado com sucesso:', res);
           this.pacientes.push(res);
           this.resetForm();
+          this.fecharModal('#modalForm');
         },
         error: (err) => console.error('Erro ao criar paciente:', err)
       });

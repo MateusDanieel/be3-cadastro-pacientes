@@ -112,11 +112,11 @@
           <option value="Outro">Outro</option>
         </select>
 
-        <label for="novoPacienteCpf">CPF <small>*</small></label>
-        <input type="text" id="novoPacienteCpf" name="cpf" [(ngModel)]="novoPaciente.cpf" required />
+        <label for="novoPacienteCpf">CPF</label>
+        <input type="text" id="novoPacienteCpf" name="cpf" mask="000.000.000-00" [(ngModel)]="novoPaciente.cpf" />
 
         <label for="novoPacienteRg">RG <small>*</small></label>
-        <input type="text" id="novoPacienteRg" name="rg" [(ngModel)]="novoPaciente.rg" required />
+        <input type="text" id="novoPacienteRg" name="rg" mask="00.000.000-0" [(ngModel)]="novoPaciente.rg" required />
 
         <label for="novoPacienteUfRg">UF do RG <small>*</small></label>
         <select name="ufRg" [(ngModel)]="novoPaciente.ufRg" id="novoPacienteUfRg" required>
@@ -154,10 +154,10 @@
         <input type="email" id="novoPacienteEmail" name="email" [(ngModel)]="novoPaciente.email" required />
 
         <label for="novoPacienteCelular">Celular <small>*</small></label>
-        <input type="tel" id="novoPacienteCelular" name="celular" [(ngModel)]="novoPaciente.celular" required />
+        <input type="tel" id="novoPacienteCelular" name="celular" mask="(00)00000-0000" [(ngModel)]="novoPaciente.celular" required />
 
         <label for="novoPacienteTelefone">Telefone</label>
-        <input type="tel" id="novoPacienteTelefone" name="telefone" [(ngModel)]="novoPaciente.telefone" />
+        <input type="tel" id="novoPacienteTelefone" name="telefone" mask="(00)0000-0000" [(ngModel)]="novoPaciente.telefone" />
 
         <label for="novoPacienteConvenio">Convênio <small>*</small></label>
         <select id="novoPacienteConvenio" name="convenioId" [(ngModel)]="novoPaciente.convenioId" required>
