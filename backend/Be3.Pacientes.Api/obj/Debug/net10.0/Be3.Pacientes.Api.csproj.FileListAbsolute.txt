@@ -414,3 +414,4 @@ C:\Users\mateu\Desktop\be3-cadastro-pacientes\backend\Be3.Pacientes.Api\obj\Debu
 C:\Users\mateu\Desktop\be3-cadastro-pacientes\backend\Be3.Pacientes.Api\obj\Debug\net10.0\Be3.Pacientes.Api.pdb
 C:\Users\mateu\Desktop\be3-cadastro-pacientes\backend\Be3.Pacientes.Api\obj\Debug\net10.0\Be3.Pacientes.Api.genruntimeconfig.cache
 C:\Users\mateu\Desktop\be3-cadastro-pacientes\backend\Be3.Pacientes.Api\obj\Debug\net10.0\ref\Be3.Pacientes.Api.dll
+C:\Users\mateu\Desktop\be3-cadastro-pacientes\backend\Be3.Pacientes.Api\obj\Debug\net10.0\Be3.Pacientes.Api.sourcelink.json
