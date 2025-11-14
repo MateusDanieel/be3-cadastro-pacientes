@@ -21,6 +21,9 @@ export class App {
   convenios: any[] = [];
   carregando = true;
   erro = '';
+  editando: boolean = false;
+  pacienteEditandoId: number | null = null;
+
 
   //
   novoPaciente: any = {
@@ -82,9 +85,13 @@ export class App {
     });
   }
 
-  // MEXER AQUI !
   editarPaciente(p: Paciente) {
-    
+    this.editando = true;
+    this.pacienteEditandoId = p.id;
+    this.novoPaciente = { ...p, convenioId: p.convenio?.id || null };
+
+
+    /*
     const novoNome = prompt('Editar nome', p.nome);
     if (novoNome === null) return;
     const payload = { ...p, nome: novoNome };
@@ -98,6 +105,7 @@ export class App {
         alert('Erro ao atualizar paciente');
       }
     });
+    */
   }
 
   //
@@ -115,32 +123,46 @@ export class App {
 
   //
   onSubmit() {
-    const payload = {
-      ...this.novoPaciente,
-      convenioId: Number(this.novoPaciente.convenioId)
-    };
+    if (this.editando && this.pacienteEditandoId !== null) {
+      this.api.updatePaciente(this.pacienteEditandoId, this.novoPaciente).subscribe({
+        next: (res) => {
+          console.log('Paciente atualizado com sucesso:', res);
+          const index = this.pacientes.findIndex(p => p.id === this.pacienteEditandoId);
+          if (index > -1) this.pacientes[index] = res;
+          this.resetForm();
+          this.carregarPacientes();
+        },
+        error: (err) => console.error('Erro ao atualizar paciente:', err)
+      });
+    } else {
+      this.api.addPaciente(this.novoPaciente).subscribe({
+        next: (res) => {
+          console.log('Paciente criado com sucesso:', res);
+          this.pacientes.push(res);
+          this.resetForm();
+        },
+        error: (err) => console.error('Erro ao criar paciente:', err)
+      });
+    }
+  }
 
-    this.api.addPaciente(payload).subscribe({
-      next: (res) => {
-        console.log('✅ Paciente criado com sucesso:', res);
-        this.pacientes.push(res);
-        this.novoPaciente = { 
-          nome: '',
-          sobrenome: '',
-          dataNascimento: '',
-          genero: '',
-          cpf: '',
-          rg: '',
-          ufRg: '',
-          email: '',
-          celular: '',
-          telefone: '',
-          convenioId: null,
-          numeroCarteirinha: '',
-          validadeCarteirinha: ''
-        };
-      },
-      error: (err) => console.error('❌ Erro ao criar paciente:', err)
-    });
+  resetForm() {
+    this.novoPaciente = { 
+      nome: '',
+      sobrenome: '',
+      dataNascimento: '',
+      genero: '',
+      cpf: '',
+      rg: '',
+      ufRg: '',
+      email: '',
+      celular: '',
+      telefone: '',
+      convenioId: null,
+      numeroCarteirinha: '',
+      validadeCarteirinha: '' 
+    };
+    this.editando = false;
+    this.pacienteEditandoId = null;
   }
 }

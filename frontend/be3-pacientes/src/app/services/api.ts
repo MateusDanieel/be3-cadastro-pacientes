@@ -49,8 +49,8 @@ export class Api {
     return this.http.get(`${this.baseUrl}/pacientes/${id}`);
   }
 
-  updatePaciente(id: number, paciente: any) {
-    return this.http.put(`${this.baseUrl}/pacientes/${id}`, paciente);
+  updatePaciente(id: number, paciente: any): Observable<Paciente> {
+    return this.http.put<Paciente>(`${this.baseUrl}/pacientes/${id}`, paciente);
   }
 
   deletePaciente(id: number) {

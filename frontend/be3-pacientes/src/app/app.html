@@ -73,7 +73,7 @@
         <select id="novoPacienteConvenio" name="convenioId" [(ngModel)]="novoPaciente.convenioId" required>
           <option value="" disabled selected>Selecione</option>
 
-          <option *ngFor="let item of convenios" [value]="item.id">
+          <option *ngFor="let item of convenios" [ngValue]="item.id">
             {{ item.nome }}
           </option>
         </select>
@@ -141,20 +141,20 @@
 
           <tbody>
             <tr *ngFor="let p of pacientes">
-              <td data-label="ID">{{p.id}}</td>
-              <td data-label="Nome">{{p.nome}}</td>
-              <td data-label="Sobrenome">{{p.sobrenome}}</td>
-              <td data-label="Dt. Nasc.">{{ p.dataNascimento | date:'dd/MM/yyyy' }}</td>
-              <td data-label="Gênero">{{p.genero}}</td>
-              <td data-label="CPF">{{p.cpf}}</td>
-              <td data-label="RG">{{p.rg}}</td>
-              <td data-label="UF do RG">{{p.ufRg}}</td>
-              <td data-label="E-mail">{{p.email}}</td>
-              <td data-label="Celular">{{p.celular}}</td>
-              <td data-label="Telefone">{{p.telefone}}</td>
-              <td data-label="Convênio">{{ p.convenio?.nome || getConvenioNome(p.convenioId) }}</td>
-              <td data-label="Nº Carteirinha">{{p.numeroCarteirinha}}</td>
-              <td data-label="Dt. Validade">{{p.validadeCarteirinha}}</td>
+              <td data-label="ID">{{p?.id}}</td>
+              <td data-label="Nome">{{p?.nome}}</td>
+              <td data-label="Sobrenome">{{p?.sobrenome}}</td>
+              <td data-label="Dt. Nasc.">{{ p?.dataNascimento | date:'dd/MM/yyyy' }}</td>
+              <td data-label="Gênero">{{p?.genero}}</td>
+              <td data-label="CPF">{{p?.cpf}}</td>
+              <td data-label="RG">{{p?.rg}}</td>
+              <td data-label="UF do RG">{{p?.ufRg}}</td>
+              <td data-label="E-mail">{{p?.email}}</td>
+              <td data-label="Celular">{{p?.celular}}</td>
+              <td data-label="Telefone">{{p?.telefone}}</td>
+              <td data-label="Convênio">{{ p?.convenio?.nome || getConvenioNome(p?.convenioId) }}</td>
+              <td data-label="Nº Carteirinha">{{p?.numeroCarteirinha}}</td>
+              <td data-label="Dt. Validade">{{p?.validadeCarteirinha}}</td>
               <td data-label="Ações">
                 <button (click)="editarPaciente(p)">Editar</button>
                 <button (click)="inativarPaciente(p.id)">Inativar</button>
