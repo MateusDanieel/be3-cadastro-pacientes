@@ -53,7 +53,7 @@ export class App {
         this.carregando = false;
       },
       error: (err: any) => {
-        console.error('Erro ao carregar pacientes:', err);
+        this.alerta('Erro ao carregar pacientes: ' + err, 'error');
         this.erro = 'Não foi possível carregar os pacientes.';
         this.carregando = false;
       }
@@ -63,7 +63,8 @@ export class App {
   carregarConvenios() {
     this.api.getConvenios().subscribe({
       next: (dados) => this.convenios = dados,
-      error: () => console.error('Erro ao carregar os convênios.')
+      error: () => this.alerta('Erro ao carregar os convênios.', 'error')
+
     });
   }
 
@@ -72,12 +73,11 @@ export class App {
 
     this.api.deletePaciente(id).subscribe({
       next: () => {
-        console.log('Paciente inativado');
+        this.alerta('Paciente inativado com sucesso.', 'success');
         this.carregarPacientes(); 
       },
       error: (err: any) => {
-        console.error('Erro ao inativar paciente:', err);
-        alert('Erro ao inativar paciente');
+        this.alerta('Erro ao inativar paciente:' + err, 'error')
       }
     });
   }
@@ -138,8 +138,16 @@ export class App {
     }
   }
 
-  alerta(msg: string, cat: string) {
+  alerta(msg: string, cat: 'success' | 'error') {
+    const div = document.createElement('div');
 
+    div.className = `component__alert component__alert--${cat}`;
+    div.setAttribute('role', 'alert');
+    div.innerText = msg;
+
+    document.querySelector('body')?.appendChild(div);
+
+    setTimeout(() => div.remove(), 3000);
   }
 
   resetForm() {
@@ -172,23 +180,23 @@ export class App {
     if (this.editando && this.pacienteEditandoId !== null) {
       this.api.updatePaciente(this.pacienteEditandoId, this.novoPaciente).subscribe({
         next: (res) => {
-          console.log('Paciente atualizado com sucesso:', res);
+          this.alerta('Paciente atualizado com sucesso.', 'success');
           const index = this.pacientes.findIndex(p => p.id === this.pacienteEditandoId);
           if (index > -1) this.pacientes[index] = res;
           this.fecharModal('#modalForm');
           this.carregarPacientes();
           
         },
-        error: (err) => console.error('Erro ao atualizar paciente:', err)
+        error: (err) => this.alerta('Erro ao atualizar paciente:' + err, 'error')
       });
     } else {
       this.api.addPaciente(this.novoPaciente).subscribe({
         next: (res) => {
-          console.log('Paciente criado com sucesso:', res);
+          this.alerta('Paciente cadastrado com sucesso:', 'success');
           this.pacientes.push(res);
           this.fecharModal('#modalForm');
         },
-        error: (err) => console.error('Erro ao criar paciente:', err)
+        error: (err) => this.alerta('Erro ao cadastrar paciente:' + err, 'error')
       });
     }
   }
