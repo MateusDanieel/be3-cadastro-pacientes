@@ -3,7 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Api, Paciente } from './services/api';
 import { FormsModule } from '@angular/forms';
-import { NgxMaskDirective } from 'ngx-mask';
+import { NgxMaskDirective, NgxMaskPipe  } from 'ngx-mask';
 import { CpfValidatorDirective, CpfDuplicateDirective } from './validators/cpf.directive';
 import { DataFuturaValidatorDirective } from './validators/birthdate.directive';
 import { EmailValidatorDirective } from './validators/email.directive';
@@ -11,7 +11,7 @@ import { TelefoneObrigatorioDirective } from './validators/phone.directive';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, CommonModule, FormsModule, NgxMaskDirective, CpfValidatorDirective, CpfDuplicateDirective, DataFuturaValidatorDirective, EmailValidatorDirective, TelefoneObrigatorioDirective],
+  imports: [RouterOutlet, CommonModule, FormsModule, NgxMaskDirective, NgxMaskPipe , CpfValidatorDirective, CpfDuplicateDirective, DataFuturaValidatorDirective, EmailValidatorDirective, TelefoneObrigatorioDirective],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
@@ -136,7 +136,7 @@ export class App {
     }
   }
 
-  alertas(msg: string, type: string) {
+  alerta(msg: string, cat: string) {
 
   }
 

@@ -2,12 +2,37 @@
 
 $black: #000;
 $white: #fff;
+$blue: #3c82f7;
+$red: #f04543;
+$yellow: #f49f0c;
+$green: #22c65f;
 
 $sm: 576px; 
 $md: 768px; 
 $lg: 992px; 
 $xl: 1200px; 
 $xxl: 1400px;
+
+@mixin btn($bg, $color, $border-color) {
+    background-color: $bg;
+    color: $color;
+    padding: 10px 20px;
+    display: inline-block;
+    border: 1px solid $border-color;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: .3s;
+
+    &:hover {
+        box-shadow: 1px 1px 10px rgba($border-color, .5);
+    }
+
+    &:disabled {
+        opacity: .1;
+        cursor: no-drop;
+    }
+
+}
 
 :root {
 	font-size: 62.5%;
@@ -38,6 +63,10 @@ $xxl: 1400px;
     font-size: 1.6rem;
 }
 
+body {
+    background-color: #fafafa;
+}
+
 .container {
     width: 100%;
     max-width: $xxl;
@@ -63,14 +92,35 @@ $xxl: 1400px;
                 white-space: nowrap;
             }
 
+            thead {
+                background-color: rgba($black, .05); 
+
+                tr {
+                    th {
+                        font-weight: 600;
+                    }
+                }
+            }
+
             tbody {
                 tr {
                     &:nth-child(odd) {
-                        background-color: rgba($black, .05); 
+                        background-color: rgba($blue, .05); 
                     }
 
                     &:nth-child(even) {
                         background-color: $white;
+                    }
+
+                    &:hover {
+                        background-color: rgba($blue, .1); 
+                    }
+
+                    td {
+                        a {
+                            color: $blue;
+                            text-decoration: none;
+                        }
                     }
                 }
             }
@@ -95,6 +145,24 @@ $xxl: 1400px;
                 }
             }
 
+        }
+    }
+
+    &__btn {
+        &--primary {
+            @include btn($blue, $white, $blue);
+        }
+
+        &--secondary { 
+            @include btn(transparent, $blue, $blue);
+        }
+
+        &--success {
+            @include btn($green, $white, $green);
+        }
+
+        &--danger {
+            @include btn($red, $white, $red);
         }
     }
 }

@@ -2,17 +2,16 @@
 
   <section class="sec-pacientes">
     <div class="container">
-      <button type="button" (click)="abrirModal('#modalForm')">
+      <button type="button" (click)="abrirModal('#modalForm')" class="component__btn--primary sec-pacientes__bt-cadastrar">
         Cadastrar Paciente
       </button>
 
-      <div class="component__table">
+      <div class="component__table sec-pacientes__table">
         <table>
           <thead>
             <tr>
               <th>ID</th>
-              <th>Nome</th>
-              <th>Sobrenome</th>
+              <th colspan="2">Nome</th>
               <th>Dt. Nasc.</th>
               <th>Gênero</th>
               <th>CPF</th>
@@ -30,23 +29,39 @@
 
           <tbody>
             <tr *ngFor="let p of pacientes">
-              <td data-label="ID">{{p?.id}}</td>
-              <td data-label="Nome">{{p?.nome}}</td>
-              <td data-label="Sobrenome">{{p?.sobrenome}}</td>
-              <td data-label="Dt. Nasc.">{{ p?.dataNascimento | date:'dd/MM/yyyy' }}</td>
-              <td data-label="Gênero">{{p?.genero}}</td>
-              <td data-label="CPF">{{p?.cpf}}</td>
-              <td data-label="RG">{{p?.rg}}</td>
-              <td data-label="UF do RG">{{p?.ufRg}}</td>
-              <td data-label="E-mail">{{p?.email}}</td>
-              <td data-label="Celular">{{p?.celular}}</td>
-              <td data-label="Telefone">{{p?.telefone}}</td>
-              <td data-label="Convênio">{{ p?.convenio?.nome || getConvenioNome(p?.convenioId) }}</td>
-              <td data-label="Nº Carteirinha">{{p?.numeroCarteirinha}}</td>
-              <td data-label="Dt. Validade">{{p?.validadeCarteirinha | date:'dd/MM/yyyy' }}</td>
-              <td data-label="Ações">
-                <button (click)="editarPaciente(p)">Editar</button>
-                <button (click)="inativarPaciente(p.id)">Inativar</button>
+              <td data-label="ID:">{{p?.id}}</td>
+              <td data-label="Nome:" colspan="2">{{p?.nome}} {{p?.sobrenome}}</td>
+              <td data-label="Dt. Nasc.:">{{ p?.dataNascimento | date:'dd/MM/yyyy' }}</td>
+              <td data-label="Gênero:">{{p?.genero}}</td>
+              <td data-label="CPF:">{{p.cpf | mask: '000.000.000-00'}}</td>
+              <td data-label="RG:">{{p.rg | mask: '00.000.000-0'}}</td>
+              <td data-label="UF do RG:">{{p?.ufRg}}</td>
+              <td data-label="E-mail:">
+                <a href="mailto:{{p?.email}}" target="_blank">
+                  {{p?.email}}
+                </a>
+              </td>
+              <td data-label="Celular:">
+                <a href="tel:{{p?.celular}}" target="_blank">
+                  {{p.celular | mask: '(00) 00000-0000'}}
+                </a>
+              </td>
+              <td data-label="Telefone:">
+                <a href="tel:{{p?.telefone}}" target="_blank">
+                  {{p.telefone | mask: '(00) 0000-0000'}}
+                </a>
+              </td>
+              <td data-label="Convênio:">{{ p?.convenio?.nome || getConvenioNome(p?.convenioId) }}</td>
+              <td data-label="Nº Carteirinha:">{{p?.numeroCarteirinha}}</td>
+              <td data-label="Dt. Validade:">{{p?.validadeCarteirinha | date:'dd/MM/yyyy' }}</td>
+              <td data-label="" class="sec-pacientes__table__actions">
+                <button type="button" (click)="editarPaciente(p)" class="component__btn--success sec-pacientes__table__actions__bt">
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </button>
+
+                <button type="button" (click)="inativarPaciente(p.id)" class="component__btn--danger sec-pacientes__table__actions__bt">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
               </td>
             </tr>
           </tbody>
@@ -57,7 +72,7 @@
 
 </main>
 
-<div class="modal-form" id="modalForm" role="dialog" aria-modal="true" hidden (click)="onBackdropClick($event, '#modalForm')">
+<div class="modal-form" id="modalForm" role="dialog" aria-modal="true" hidden (mousedown)="onBackdropClick($event, '#modalForm')">
   <div class="modal-form__content">
     
     <form (ngSubmit)="onSubmit()" #pacienteForm="ngForm" class="modal-form__content__form">
@@ -76,8 +91,7 @@
         </small>
 
         <label for="novoPacienteGenero">Gênero</label>
-        <select name="genero" [(ngModel)]="novoPaciente.genero" id="novoPacienteGenero" required>
-          <option value="" selected disabled>Selecione</option>
+        <select name="genero" [(ngModel)]="novoPaciente.genero" id="novoPacienteGenero">
           <option value="Masculino">Masculino</option>
           <option value="Feminino">Feminino</option>
           <option value="Outro">Outro</option>
@@ -95,10 +109,11 @@
           [cpfOriginal]="cpfOriginal"
           [pacienteId]="pacienteEditandoId"
           #cpf="ngModel"
+          [disabled]="editando && !!cpfOriginal"
         />
 
         <small *ngIf="cpf.errors?.['cpfInvalido'] && cpf.touched" class="error">
-          CPF inválido.
+          Informe um CPF válido.
         </small>
 
         <small *ngIf="cpf.errors?.['cpfJaExiste']  && cpf.touched" class="error">
@@ -106,11 +121,10 @@
         </small>
 
         <label for="novoPacienteRg">RG</label>
-        <input type="text" id="novoPacienteRg" name="rg" mask="00.000.000-0" [(ngModel)]="novoPaciente.rg" required />
+        <input type="text" id="novoPacienteRg" name="rg" mask="00.000.000-0" [(ngModel)]="novoPaciente.rg" />
 
         <label for="novoPacienteUfRg">UF do RG</label>
-        <select name="ufRg" [(ngModel)]="novoPaciente.ufRg" id="novoPacienteUfRg" required>
-          <option value="" selected disabled>Selecione</option>
+        <select name="ufRg" [(ngModel)]="novoPaciente.ufRg" id="novoPacienteUfRg">
           <option value="AC">AC</option>
           <option value="AL">AL</option>
           <option value="AP">AP</option>
@@ -152,7 +166,7 @@
         />
 
         <small *ngIf="email.errors?.['emailInvalido'] && email.touched" class="error">
-          E-mail inválido.
+          Informe um endereço de e-mail válido.
         </small>
 
         <div ngModelGroup="contatos" #contatos="ngModelGroup" telefoneObrigatorio>
@@ -162,7 +176,7 @@
             type="tel"
             id="novoPacienteCelular"
             name="celular"
-            mask="(00)00000-0000"
+            mask="(00) 00000-0000"
             [(ngModel)]="novoPaciente.celular"
           />
 
@@ -171,7 +185,7 @@
             type="tel"
             id="novoPacienteTelefone"
             name="telefone"
-            mask="(00)0000-0000"
+            mask="(00) 0000-0000"
             [(ngModel)]="novoPaciente.telefone"
           />
 
@@ -183,8 +197,6 @@
 
         <label for="novoPacienteConvenio">Convênio</label>
         <select id="novoPacienteConvenio" name="convenioId" [(ngModel)]="novoPaciente.convenioId" required>
-          <option value="" disabled selected>Selecione</option>
-
           <option *ngFor="let item of convenios" [ngValue]="item.id">
             {{ item.nome }}
           </option>
@@ -196,11 +208,17 @@
         <label for="novoPacienteValidadeCarteirinha">Validade da Carteirinha do Convênio</label>
         <input type="date" id="novoPacienteValidadeCarteirinha" name="validadeCarteirinha" [(ngModel)]="novoPaciente.validadeCarteirinha" required />
 
-        <button type="submit" [disabled]="pacienteForm.invalid">Salvar</button>
+        <div class="modal-form__content__actions">
+          <button type="submit" [disabled]="pacienteForm.invalid" class="modal-form__content__form__actions__bt-salvar component__btn--primary">
+            Salvar
+          </button>
 
-        <button type="button" class="modal-form__content__bt-close" (click)="fecharModal('#modalForm')">
-          &times;
-        </button>
+          <button type="button" class="modal-form__content__form__actions__bt-fechar component__btn--secondary" (click)="fecharModal('#modalForm')">
+            Fechar
+          </button>
+        </div>
+
+        
       </form>
   </div>
 </div>
