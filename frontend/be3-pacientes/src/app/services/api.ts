@@ -6,6 +6,7 @@ export interface Paciente {
   id: number,
   nome: string,
   sobrenome: string,
+  ativo: boolean,
   dataNascimento: string,
   genero: string,
   cpf: string,
@@ -33,8 +34,8 @@ export class Api {
     return this.http.get<any[]>(`${this.baseUrl}/convenios`);
   }
 
-  getPacientes(): Observable<Paciente[]> {
-    return this.http.get<Paciente[]>(`${this.baseUrl}/pacientes`);
+  getPacientes(incluirInativos: boolean = false): Observable<Paciente[]> {
+    return this.http.get<Paciente[]>(`${this.baseUrl}/pacientes?incluirInativos=${incluirInativos}`);
   }
 
   addPaciente(paciente: Partial<Paciente>): Observable<Paciente> {

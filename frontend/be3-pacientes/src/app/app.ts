@@ -17,6 +17,7 @@ import { TelefoneObrigatorioDirective } from './validators/phone.directive';
 })
 
 export class App {
+  mostrarInativos = false;
   pacientes: Paciente[] = [];
   convenios: any[] = [];
   carregando = true;
@@ -45,7 +46,8 @@ export class App {
 
   carregarPacientes() {
     this.carregando = true;
-    this.api.getPacientes().subscribe({
+
+    this.api.getPacientes(this.mostrarInativos).subscribe({
       next: (dados: Paciente[]) => {
         this.pacientes = dados;
         this.carregando = false;
@@ -159,6 +161,11 @@ export class App {
     };
     this.editando = false;
     this.pacienteEditandoId = null;
+  }
+
+  toggleMostrarInativos() {
+    this.mostrarInativos = !this.mostrarInativos;
+    this.carregarPacientes();
   }
 
   onSubmit() {

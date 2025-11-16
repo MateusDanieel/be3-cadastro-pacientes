@@ -32,6 +32,10 @@ $xxl: 1400px;
         cursor: no-drop;
     }
 
+    .fa-solid {
+        color: $color;
+    }
+
 }
 
 :root {
@@ -61,6 +65,7 @@ $xxl: 1400px;
     box-sizing: border-box;
     font-family: "Poppins", sans-serif;
     font-size: 1.6rem;
+    color: #333;
 }
 
 body {

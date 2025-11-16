@@ -2,9 +2,16 @@
 
   <section class="sec-pacientes">
     <div class="container">
-      <button type="button" (click)="abrirModal('#modalForm')" class="component__btn--primary sec-pacientes__bt-cadastrar">
-        Cadastrar Paciente
-      </button>
+      <div class="sec-pacientes__actions">
+        <button type="button" (click)="abrirModal('#modalForm')" class="component__btn--primary sec-pacientes__actions__bt">
+          Cadastrar Paciente
+        </button>
+
+        <button (click)="toggleMostrarInativos()" class="component__btn--secondary sec-pacientes__actions__bt">
+          {{ mostrarInativos ? 'Ocultar Pacientes Inativos' : 'Mostrar Pacientes Inativos' }}
+        </button>
+      </div>
+      
 
       <div class="component__table sec-pacientes__table">
         <table>
@@ -12,6 +19,7 @@
             <tr>
               <th>ID</th>
               <th colspan="2">Nome</th>
+              <th>Status</th>
               <th>Dt. Nasc.</th>
               <th>Gênero</th>
               <th>CPF</th>
@@ -28,9 +36,14 @@
           </thead>
 
           <tbody>
-            <tr *ngFor="let p of pacientes">
+            <tr *ngFor="let p of pacientes" [class.inativo]="!p.ativo">
               <td data-label="ID:">{{p?.id}}</td>
               <td data-label="Nome:" colspan="2">{{p?.nome}} {{p?.sobrenome}}</td>
+              <td data-label="Status:">
+                <span class="sec-pacientes__table__status" [class.inativo]="!p.ativo">
+                  {{ p.ativo ? 'Ativo' : 'Inativo' }}
+                </span>
+              </td>
               <td data-label="Dt. Nasc.:">{{ p?.dataNascimento | date:'dd/MM/yyyy' }}</td>
               <td data-label="Gênero:">{{p?.genero}}</td>
               <td data-label="CPF:">{{p.cpf | mask: '000.000.000-00'}}</td>
@@ -55,11 +68,11 @@
               <td data-label="Nº Carteirinha:">{{p?.numeroCarteirinha}}</td>
               <td data-label="Dt. Validade:">{{p?.validadeCarteirinha | date:'dd/MM/yyyy' }}</td>
               <td data-label="" class="sec-pacientes__table__actions">
-                <button type="button" (click)="editarPaciente(p)" class="component__btn--success sec-pacientes__table__actions__bt">
+                <button type="button" (click)="editarPaciente(p)" class="component__btn--success sec-pacientes__table__actions__bt" [disabled]="!p.ativo">
                   <i class="fa-solid fa-pen-to-square"></i>
                 </button>
 
-                <button type="button" (click)="inativarPaciente(p.id)" class="component__btn--danger sec-pacientes__table__actions__bt">
+                <button type="button" (click)="inativarPaciente(p.id)" class="component__btn--danger sec-pacientes__table__actions__bt" [disabled]="!p.ativo">
                   <i class="fa-solid fa-trash"></i>
                 </button>
               </td>
