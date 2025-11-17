@@ -102,13 +102,13 @@ Acesse no navegador:\
 
 ### Versões incompatíveis
 
-- Verifique as versões instaladas:
+- Verifique as versões instaladas do .NET e do .NET SDK:
 
 ``` bash
 dotnet --info
 ```
 
-- Confirme se usa o **.NET versão 10.0** e o **SDK versão 10.0.100**.
+Confirme se usa o **.NET versão 10.0** e o **SDK versão 10.0.100**.
 
 - Verifique a versão instalada do Angular:
 
@@ -116,14 +116,14 @@ dotnet --info
 ng version
 ```
 
-- Confirme se usa a versão **20.3.9**.
+Confirme se usa a versão **20.3.9**.
 
 - Verifique versão instalada do Node:
 
 ``` bash
 node -v
 ```
-- Confirme se usa a versão **22.20.0**.
+Confirme se usa a versão **22.20.0**.
 
-Se as versões de .NET, Node ou Angular forem diferentes das
+Se as versões de .NET, Angular ou Node forem diferentes das
 especificadas, erros podem ocorrer.
