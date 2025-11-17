@@ -115,7 +115,6 @@ Confirme se usa o **.NET versão 10.0** e o **SDK versão 10.0.100**.
 ``` bash
 ng version
 ```
-
 Confirme se usa a versão **20.3.9**.
 
 - Verifique versão instalada do Node:
@@ -127,3 +126,24 @@ Confirme se usa a versão **22.20.0**.
 
 Se as versões de .NET, Angular ou Node forem diferentes das
 especificadas, erros podem ocorrer.
+
+### Portas diferentes das esperadas
+
+- O back-end normalmente inicia em **http://localhost:5155** e **https://localhost:7240**, mas essas portas podem variar dependendo do ambiente.
+- Sempre confira o Terminal após rodar:
+
+``` bash
+dotnet run
+```
+
+- Se o Angular tentar consumir a API e retornar erro de CORS ou erro de conexão no console, verifique o arquivo `frontend\src\app\services\api.ts`:
+``` api.ts
+private baseUrl = 'http://localhost:5155/api';
+```
+Ajuste o número da porta conforme o que estiver aparecendo no terminal do .NET.
+
+- Da mesma forma, se o Angular não abrir em **http://localhost:4200/**, verifique a porta exibida ao rodar:
+``` bash
+npx ng serve
+```
+
