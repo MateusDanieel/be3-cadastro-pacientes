@@ -97,10 +97,10 @@ Acesse no navegador:\
 
 # Possíveis erros e soluções
 
-### Angular CLI não funciona
+### Angular CLI não funciona (ng não é reconhecido como um comando interno ou externo)
 
 -   Pode ser problema de PATH/variáveis de ambiente.\
-    [Guia útil](https://horadecodar.com.br/resolvendo-o-erro-ng-nao-e-reconhecido-como-um-comando-interno-ou-externo/#:~:text=Este%20erro%20%C3%A9%20comum%20e%20geralmente%20indica%20que,o%20Angular%20CLI%20funcione%20corretamente%20em%20sua%20m%C3%A1quina)
+    [Guia útil](https://horadecodar.com.br/resolvendo-o-erro-ng-nao-e-reconhecido-como-um-comando-interno-ou-externo/)
 
 ### Versões incompatíveis
 
