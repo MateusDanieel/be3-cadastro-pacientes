@@ -17,10 +17,10 @@ TypeScript, Node.js, Angular\
 
 ## Ferramentas necessárias para executar localmente
 
--   Git\
--   .NET v10.0\
--   .NET SDK v10.0.100\
--   Node.js v22.20.0\
+-   Git
+-   .NET v10.0
+-   .NET SDK v10.0.100
+-   Node.js v22.20.0
 -   Angular v20.3.0
 
 ------------------------------------------------------------------------
@@ -51,14 +51,14 @@ Abra o Swagger para testar os endpoints:\
 ### OBS.
 
 -   O projeto utiliza **EF Core**, que cria o arquivo `.db`
-    automaticamente na primeira execução.\
+    automaticamente na primeira execução.
 -   O backend já está configurado com **CORS liberado para o Angular**.
 
 ------------------------------------------------------------------------
 
 ## Front-end (Angular)
 
-Abra **uma nova janela do Terminal** (mantenha o backend rodando).
+Abra **uma nova janela do Terminal** (mantenha o back-end rodando).
 
 Instale o Angular CLI:
 
@@ -66,7 +66,7 @@ Instale o Angular CLI:
 npm install -g @angular/cli@20.3.0
 ```
 
-Entre na pasta do frontend:
+Entre na pasta do front-end:
 
 ``` bash
 cd ./be3-cadastro-pacientes/frontend/be3-pacientes
