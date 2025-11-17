@@ -52,7 +52,7 @@ Abra o Swagger para testar os endpoints:\
 
 -   O projeto utiliza **EF Core**, que cria o arquivo `.db`
     automaticamente na primeira execução.
--   O backend já está configurado com **CORS liberado para o Angular**.
+-   O back-end já está configurado com **CORS liberado para o Angular**.
 
 ------------------------------------------------------------------------
 
