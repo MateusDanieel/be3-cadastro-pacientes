@@ -6,6 +6,8 @@ A arquitetura foi iniciada pelo back-end para garantir a integridade das
 regras de negócio e consumir endpoints reais no front-end, priorizando a
 usabilidade e clareza do código final.
 
+No front-end, o foco foi oferecer uma interface limpa, funcional e intuitiva, mantendo boas práticas de usabilidade, acessibilidade e responsividade.
+
 ## Tecnologias utilizadas
 
 **Front-end:** HTML5 semântico, CSS3, Sass/SCSS, JavaScript,
