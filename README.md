@@ -48,7 +48,7 @@ O servidor abrirá nas portas `http://localhost:5155` e
 Abra o Swagger para testar os endpoints:\
 **http://localhost:5155/swagger**
 
-### OBS.
+### Observações
 
 -   O projeto utiliza **EF Core**, que cria o arquivo `.db`
     automaticamente na primeira execução.
@@ -87,7 +87,7 @@ npx ng serve
 Acesse no navegador:\
 **http://localhost:4200/**
 
-### Observação
+### Observações
 
 -   O Angular está configurado para consumir a API na porta **:5155**
 
@@ -95,22 +95,35 @@ Acesse no navegador:\
 
 # Possíveis erros e soluções
 
-### Back-end não executa
-
--   Verifique as versões instaladas:
-
-``` bash
-dotnet --info
-```
-
--   Confirme se usa **.NET 10.0** e **SDK 10.0.100**.
-
 ### Angular CLI não funciona
 
 -   Pode ser problema de PATH/variáveis de ambiente.\
     [Guia útil](https://horadecodar.com.br/resolvendo-o-erro-ng-nao-e-reconhecido-como-um-comando-interno-ou-externo/#:~:text=Este%20erro%20%C3%A9%20comum%20e%20geralmente%20indica%20que,o%20Angular%20CLI%20funcione%20corretamente%20em%20sua%20m%C3%A1quina)
 
 ### Versões incompatíveis
+
+- Verifique as versões instaladas:
+
+``` bash
+dotnet --info
+```
+
+- Confirme se usa o **.NET versão 10.0** e o **SDK versão 10.0.100**.
+
+- Verifique a versão instalada do Angular:
+
+``` bash
+ng version
+```
+
+- Confirme se usa a versão **20.3.9**.
+
+- Verifique versão instalada do Node:
+
+``` bash
+node -v
+```
+- Confirme se usa a versão **22.20.0**.
 
 Se as versões de .NET, Node ou Angular forem diferentes das
 especificadas, erros podem ocorrer.
